@@ -1,0 +1,23 @@
+// One-letter variable
+VAR :: '[a-zA-Z]';
+
+// Not sign (!)
+NOT :: '!';
+
+// Or sign (|)
+OR :: '\|';
+
+// And sign (&)
+AND :: '&';
+
+// Xor sign (^)
+XOR :: '\^';
+
+// Left bracket
+LEFT :: '\(';
+
+// Right bracket
+RIGHT :: '\)';
+
+// Skip whitespaces, tabs and line breaks
+WS :: '[ \r\t\n]+' ## skip;

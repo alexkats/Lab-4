@@ -1,0 +1,33 @@
+myparser Lab2Lexer;
+start expr;
+
+header {
+import javax.swing.*;
+};
+
+expr returns [Tree t]
+    ::  term exprList {$t = new Tree(NodeType.E, $term.t, $exprList.t);}
+    ;
+exprList returns [Tree t]
+    ::  OR term exprList {$t = new Tree(NodeType.E_, new Tree(NodeType.OR), $term.t, $exprList.t);}
+    |   {$t = new Tree(NodeType.E_);}
+    ;
+term returns [Tree t]
+    ::  factor termList {$t = new Tree(NodeType.T, $factor.t, $termList.t);}
+    ;
+termList returns [Tree t]
+    ::  XOR factor termList {$t = new Tree(NodeType.T_, new Tree(NodeType.XOR), $factor.t, $termList.t);}
+    |   {$t = new Tree(NodeType.T_);}
+    ;
+factor returns [Tree t]
+    ::  atom factorList {$t = new Tree(NodeType.F, $atom.t, $factorList.t);}
+    ;
+factorList returns [Tree t]
+    ::  AND atom factorList {$t = new Tree(NodeType.F_, new Tree(NodeType.AND), $atom.t, $factorList.t);}
+    |   {$t = new Tree(NodeType.F_);}
+    ;
+atom returns [Tree t]
+    ::  NOT atom {$t = new Tree(NodeType.A, new Tree(NodeType.NOT), $atom.t);}
+    |   VAR {$t = new Tree(NodeType.A, new Tree(NodeType.VAR));}
+    |   LEFT expr RIGHT {$t = new Tree(NodeType.A, new Tree(NodeType.LEFT), $expr.t, new Tree(NodeType.RIGHT));}
+    ;
